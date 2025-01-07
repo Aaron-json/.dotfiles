@@ -7,10 +7,10 @@ return {
       options = {
         theme = 'auto',
         component_separators = '',
-        section_separators = { left = '', right = '' },
+        section_separators = '',
       },
       sections = {
-        lualine_a = { { 'mode', separator = { left = '' }, right_padding = 2 } },
+        lualine_a = { { 'mode', right_padding = 2 } },
         lualine_b = { 'diff', 'branch' },
         lualine_c = {
           '%=',
@@ -19,7 +19,7 @@ return {
         lualine_x = {},
         lualine_y = { 'filetype', 'filesize', 'progress' },
         lualine_z = {
-          { 'location', separator = { right = '' }, left_padding = 2 },
+          { 'location', left_padding = 2 },
         },
       },
       inactive_sections = {

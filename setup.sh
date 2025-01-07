@@ -1,16 +1,16 @@
 #!/bin/bash
 
-# the directory containing this script
-DOTFILES_DIR="$HOME/.dotfiles"
-
 # the directory to back up old files to
 BACKUP_DIR="$HOME/backups"
 
 # the directory to symlink files to
 CONFIG_DIR="$HOME/.config"
 
+# dotfiles dir containing the files to symlink
+DOTFILES_DIR="$HOME/.dotfiles"
+
 # files to go in the .config directory
-CONFIG_DIR_FILES=("nvim")
+CONFIG_DIR_FILES=("nvim" "wezterm")
 
 if [ ! -d "$BACKUP_DIR" ]; then
     mkdir "$BACKUP_DIR"
@@ -22,13 +22,14 @@ fi
 
 # backups old files to a backup directory if they exist
 backup_old_file() {
-    local old_file="$1"
+    local source_file="$1"
     local target_dir="$2"
 
-    if [ -e "$target_dir/$(basename "$old_file")" ]; then
-        local backup_file="$BACKUP_DIR/$(basename "$old_file")"
-        echo "Backing up $old_file to $backup_file"
-        cp -r "$old_file" "$backup_file"
+    # check if the target directory already contains a file with the same name and back it up.
+    if [ -e "$target_dir/$(basename "$source_file")" ]; then
+        local backup_path="$BACKUP_DIR/$(basename "$source_file")"
+        echo "Backing up $source_file to $backup_path"
+        cp -rf "$source_file" "$backup_path"
     fi
 }
 
@@ -39,11 +40,10 @@ symlink_file() {
     backup_old_file "$source_file" "$target_dir"
 
     echo "Symlinking $source_file to $target_dir"
-    ln -sf "$source_file" "$target_dir"
+    ln -sf "$source_file" "$target_dir/$(basename "$source_file")"
 }
 
 # add files to the .config directory
 for file in "${CONFIG_DIR_FILES[@]}"; do
-    echo "Adding $file to $CONFIG_DIR"
-    symlink_file "$DOTFILES_DIR/$file" "$CONFIG_DIR/$file"
+    symlink_file "$DOTFILES_DIR/$file" "$CONFIG_DIR"
 done

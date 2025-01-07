@@ -464,6 +464,7 @@ require('lazy').setup({
         javascript = { 'prettier' },
         typescript = { 'prettier' },
         typescriptreact = { 'prettier' },
+        bash = { 'shfmt' },
       },
     },
   },

@@ -159,6 +159,7 @@ return {
         css_variables = {},
         marksman = {},
         bashls = {},
+        shfmt = {},
       }
 
       -- Ensure the servers and tools above are installed
