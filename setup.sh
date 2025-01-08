@@ -7,7 +7,7 @@ BACKUP_DIR="$HOME/backups"
 CONFIG_DIR="$HOME/.config"
 
 # dotfiles dir containing the files to symlink
-DOTFILES_DIR="$HOME/.dotfiles"
+DOTFILES_DIR="$(realpath .)"
 
 # files to go in the .config directory
 CONFIG_DIR_FILES=("nvim" "wezterm")
