@@ -47,3 +47,7 @@ symlink_file() {
 for file in "${CONFIG_DIR_FILES[@]}"; do
     symlink_file "$DOTFILES_DIR/$file" "$CONFIG_DIR"
 done
+
+# add aliases to the .bashrc file
+echo "Adding aliases to .bashrc"
+cat ./aliases.sh >> $HOME/.bashrc

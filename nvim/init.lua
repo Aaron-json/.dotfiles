@@ -179,15 +179,9 @@ vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagn
 -- or just use <C-\><C-n> to exit terminal mode
 vim.keymap.set('t', '<Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
 
--- TIP: Disable arrow keys in normal mode
--- vim.keymap.set('n', '<left>', '<cmd>echo "Use h to move!!"<CR>')
--- vim.keymap.set('n', '<right>', '<cmd>echo "Use l to move!!"<CR>')
--- vim.keymap.set('n', '<up>', '<cmd>echo "Use k to move!!"<CR>')
--- vim.keymap.set('n', '<down>', '<cmd>echo "Use j to move!!"<CR>')
-
 -- Keybinds to make split navigation easier.
 --  Use CTRL+<hjkl> to switch between windows
---
+
 --  See `:help wincmd` for a list of all window commands
 vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
 vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
@@ -279,10 +273,17 @@ require('lazy').setup({
 
   { -- Useful plugin to show you pending keybinds.
     'folke/which-key.nvim',
-    event = 'VimEnter', -- Sets the loading event to 'VimEnter'
+    event = 'VeryLazy', -- Sets the loading event to 'VimEnter'
+    keys = {
+      {
+        '<leader>?',
+        function()
+          require('which-key').show { global = true }
+        end,
+        desc = 'Global keymaps',
+      },
+    },
     config = function() -- This is the function that runs, AFTER loading
-      require('which-key').setup {}
-
       -- Document existing key chains
       require('which-key').add {
         { '<leader>c', group = '[c]ode' },
@@ -483,6 +484,16 @@ require('lazy').setup({
       --  - yinq - [Y]ank [I]nside [N]ext [']quote
       --  - ci'  - [C]hange [I]nside [']quote
       require('mini.ai').setup { n_lines = 500 }
+
+      local buf_remove = require 'mini.bufremove'
+      buf_remove.setup()
+      vim.keymap.set('n', '<leader>bd', function()
+        buf_remove.delete(0, false)
+      end, { desc = '[b]uffer [d]elete' })
+
+      vim.keymap.set('n', '<leader>bu', function()
+        buf_remove.unshow()
+      end, { desc = '[b]uffer [u]nshow' })
 
       -- Add/delete/replace surroundings (brackets, quotes, etc.)
       --
