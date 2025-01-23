@@ -423,10 +423,10 @@ require('lazy').setup({
           clear_suggestion = '<C-e>',
           accept_word = '<C-l>',
         },
-        -- condition = function()
-        --   local dir = vim.fn.expand '%:p:h'
-        --   return vim.startswith(dir, '/home/aaron/uni')
-        -- end,
+        condition = function()
+          local dir = vim.fn.expand '%:p:h'
+          return vim.startswith(dir, '/home/aaron/uni')
+        end,
       }
     end,
   },
@@ -484,6 +484,7 @@ require('lazy').setup({
       --  - yinq - [Y]ank [I]nside [N]ext [']quote
       --  - ci'  - [C]hange [I]nside [']quote
       require('mini.ai').setup { n_lines = 500 }
+      require('mini.pairs').setup()
 
       local buf_remove = require 'mini.bufremove'
       buf_remove.setup()
@@ -558,7 +559,6 @@ require('lazy').setup({
   require 'kickstart.plugins.debug',
   require 'kickstart.plugins.indent_line',
   require 'kickstart.plugins.lint',
-  require 'kickstart.plugins.autopairs',
   require 'kickstart.plugins.neo-tree',
   require 'kickstart.plugins.gitsigns', -- gitsigns recommend keymaps
 
